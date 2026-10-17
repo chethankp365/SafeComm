@@ -1,0 +1,110 @@
+:root {
+  /* ==========================================================================
+     SafeComm Design Tokens — Pure Aerospace Black & White Design System
+     ========================================================================== */
+
+  /* Surface & Backgrounds */
+  --bg-base: #FFFFFF;
+  --bg-surface: #FAFAFA;
+  --bg-subtle: #F4F4F6;
+  --bg-muted: #EBEBEF;
+  --bg-inverse: #0A0A0A;
+  --bg-inverse-subtle: #141416;
+
+  /* Typography Colors */
+  --text-primary: #0A0A0A;
+  --text-secondary: #52525B;
+  --text-muted: #71717A;
+  --text-tertiary: #A1A1AA;
+  --text-inverse: #FFFFFF;
+  --text-inverse-muted: #A1A1AA;
+
+  /* Borders & Hairlines */
+  --border-hairline: rgba(0, 0, 0, 0.08);
+  --border-subtle: rgba(0, 0, 0, 0.12);
+  --border-medium: rgba(0, 0, 0, 0.20);
+  --border-focus: rgba(10, 10, 10, 0.35);
+  --border-inverse: rgba(255, 255, 255, 0.12);
+
+  /* Glass Surfaces (Backdrop blur) */
+  --glass-bg: rgba(255, 255, 255, 0.82);
+  --glass-bg-subtle: rgba(255, 255, 255, 0.65);
+  --glass-bg-dense: rgba(255, 255, 255, 0.92);
+  --glass-bg-dark: rgba(10, 10, 10, 0.85);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-border-dark: rgba(255, 255, 255, 0.10);
+  --glass-blur: blur(16px);
+  --glass-blur-sm: blur(8px);
+  --glass-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.05), 0 1px 3px 0 rgba(0, 0, 0, 0.03);
+  --glass-shadow-lg: 0 12px 40px -4px rgba(0, 0, 0, 0.08), 0 2px 6px 0 rgba(0, 0, 0, 0.04);
+
+  /* Alert Accents — Strictly Isolated */
+  --accent-critical: #FF3B30;
+  --accent-critical-bg: rgba(255, 59, 48, 0.08);
+  --accent-critical-border: rgba(255, 59, 48, 0.25);
+  --accent-warning: #FF9F0A;
+  --accent-warning-bg: rgba(255, 159, 10, 0.08);
+  --accent-warning-border: rgba(255, 159, 10, 0.25);
+  --accent-match: #30D158;
+  --accent-match-bg: rgba(48, 209, 88, 0.08);
+  --accent-match-border: rgba(48, 209, 88, 0.25);
+  --accent-info: #0071E3;
+  --accent-info-bg: rgba(0, 113, 227, 0.08);
+
+  /* Spacing Scale (4 / 8 / 12 / 16 / 24 / 32 / 48 / 64) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Radius Scale (8 / 12 / 16 / 24 / Full) */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* Transitions */
+  --ease-aerospace: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 0.2s;
+  --duration-normal: 0.4s;
+  --duration-slow: 0.8s;
+}
+
+/* Dark mode overrides (applied via html.dark or specific dark scopes) */
+html.dark {
+  --bg-base: #0A0A0A;
+  --bg-surface: #121214;
+  --bg-subtle: #18181B;
+  --bg-muted: #27272A;
+  --bg-inverse: #FFFFFF;
+  --bg-inverse-subtle: #F4F4F6;
+
+  --text-primary: #F4F4F6;
+  --text-secondary: #A1A1AA;
+  --text-muted: #71717A;
+  --text-tertiary: #52525B;
+  --text-inverse: #0A0A0A;
+  --text-inverse-muted: #52525B;
+
+  --border-hairline: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.12);
+  --border-medium: rgba(255, 255, 255, 0.22);
+  --border-focus: rgba(255, 255, 255, 0.45);
+  --border-inverse: rgba(0, 0, 0, 0.15);
+
+  --glass-bg: rgba(18, 18, 20, 0.82);
+  --glass-bg-subtle: rgba(18, 18, 20, 0.65);
+  --glass-bg-dense: rgba(18, 18, 20, 0.94);
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --glass-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.4), 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  --glass-shadow-lg: 0 12px 40px -4px rgba(0, 0, 0, 0.6);
+}
