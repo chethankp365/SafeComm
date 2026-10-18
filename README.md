@@ -1,9 +1,10 @@
 <div align="center">
 
-<img src="docs/assets/banner.svg" alt="SafeComm — Every read-back. Verified." width="100%"/>
+<img src="banner.svg" alt="SafeComm — Every read-back. Verified." width="100%"/>
 
 <br/>
 
+[![Live](https://img.shields.io/badge/live-safecomm.vercel.app-0a0a0a?style=for-the-badge&logo=vercel&logoColor=white)](https://safecomm.vercel.app)
 [![Prototype](https://img.shields.io/badge/status-prototype-f59e0b?style=for-the-badge)](#-prototype-notice)
 [![React](https://img.shields.io/badge/React-19-0a0a0a?style=for-the-badge&logo=react&logoColor=61dafb)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-0a0a0a?style=for-the-badge&logo=typescript&logoColor=3178c6)](https://www.typescriptlang.org)
@@ -13,17 +14,27 @@
 **An AI-assisted safety net for the most important sentence in aviation: the read-back.**
 SafeComm listens to controller ↔ pilot radio exchanges, extracts every instruction, and lets a **deterministic rule engine** decide whether the read-back matches.
 
-[**Live demo**](#-live-demo) · [**Pipeline**](#-how-it-works) · [**Screenshots**](#-screenshots) · [**Quick start**](#-quick-start) · [**Roadmap**](#-roadmap)
+[**🌐 Live site**](https://safecomm.vercel.app) · [**Demo**](#-demo) · [**Pipeline**](#-how-it-works) · [**Screenshots**](#-screenshots) · [**Quick start**](#-quick-start) · [**Roadmap**](#-roadmap)
 
 </div>
 
-<img src="docs/assets/divider.svg" width="100%" alt=""/>
+<img src="divider%20(1).svg" width="100%" alt=""/>
 
 ## 🚨 Prototype Notice
 
 > **SafeComm is a demonstration, research and phraseology-training prototype. It is NOT certified for operational air traffic control, separation assurance or flight operations, and must never be used to make real-world safety decisions.**
 
-<img src="docs/assets/divider.svg" width="100%" alt=""/>
+<img src="divider%20(1).svg" width="100%" alt=""/>
+
+## 🌐 Live Site
+
+SafeComm is deployed on Vercel and ready to try:
+
+### 👉 **[safecomm.vercel.app](https://safecomm.vercel.app)**
+
+Sign in, open the **Dashboard** to play a scripted scenario, then explore the **Radar**, **Ledger**, **Alerts**, **Analytics** and **Training** pages.
+
+<img src="divider%20(1).svg" width="100%" alt=""/>
 
 ## 🎯 Why SafeComm?
 
@@ -39,22 +50,24 @@ SafeComm explores a hybrid approach:
 
 > **Key principle: AI assists with extraction. Deterministic TypeScript rules make the verdict.**
 
-<img src="docs/assets/divider.svg" width="100%" alt=""/>
+<img src="divider%20(1).svg" width="100%" alt=""/>
 
-## 🎬 Live Demo
+## 🎬 Demo
 
 <div align="center">
-<img src="docs/assets/demo.svg" alt="Animated demo: a wrong turn direction in a read-back is caught by the rule engine" width="100%"/>
+<img src="demo.svg" alt="Animated demo: a wrong turn direction in a read-back is caught by the rule engine" width="100%"/>
 </div>
 
 The loop above replays the built-in **Heading Direction Swap** scenario: the controller assigns a **right** turn, the pilot reads back **left**, and the engine raises a **critical** alert with a Master Caution earcon.
 
-<img src="docs/assets/divider.svg" width="100%" alt=""/>
+Want to see it for real? Run it on the **[live site](https://safecomm.vercel.app)**.
+
+<img src="divider%20(1).svg" width="100%" alt=""/>
 
 ## ⚙️ How It Works
 
 <div align="center">
-<img src="docs/assets/pipeline.svg" alt="SafeComm pipeline from radio audio to verdict" width="100%"/>
+<img src="pipeline%20(1).svg" alt="SafeComm pipeline from radio audio to verdict" width="100%"/>
 </div>
 
 ```mermaid
@@ -91,7 +104,7 @@ sequenceDiagram
 
 Verdict chips: 🟢 **MATCH** · 🔴 **MISMATCH** · 🟠 **PARTIAL** · ⚪ **UNVERIFIED**
 
-<img src="docs/assets/divider.svg" width="100%" alt=""/>
+<img src="divider%20(1).svg" width="100%" alt=""/>
 
 ## 📸 Screenshots
 
@@ -99,14 +112,14 @@ Verdict chips: 🟢 **MATCH** · 🔴 **MISMATCH** · 🟠 **PARTIAL** · ⚪ **
 
 <table>
 <tr>
-<td width="50%"><img src="docs/screenshots/01-landing-hero.png" alt="Landing hero"/></td>
-<td width="50%"><img src="docs/screenshots/02-landing-simulation.png" alt="Landing: simulation"/></td>
+<td width="50%"><img src="Screenshot%202026-10-19%20010404.png" alt="Landing hero"/></td>
+<td width="50%"><img src="Screenshot%202026-10-19%20010442.png" alt="Landing: simulation"/></td>
 </tr>
 </table>
 
 ### Operations Dashboard
 
-<img src="docs/screenshots/03-dashboard.png" alt="Dashboard with live transcript, alerts and compliance" width="100%"/>
+<img src="Screenshot%202026-10-19%20010514.png" alt="Dashboard with live transcript, alerts and compliance" width="100%"/>
 
 <sub>Scenario player, live radio transcript and ASR feed, read-back compliance, active safety alerts and the deterministic phraseology comparison panel.</sub>
 
@@ -114,14 +127,14 @@ Verdict chips: 🟢 **MATCH** · 🔴 **MISMATCH** · 🟠 **PARTIAL** · ⚪ **
 
 <table>
 <tr>
-<td width="50%"><img src="docs/screenshots/04-alerts.png" alt="Safety alerts"/><br/><sub><b>Alerts:</b> severity-graded, acknowledgeable, persisted in Supabase.</sub></td>
-<td width="50%"><img src="docs/screenshots/05-ledger.png" alt="Read-back ledger"/><br/><sub><b>Ledger:</b> searchable audit trail with side-by-side instruction vs. read-back and CSV export.</sub></td>
+<td width="50%"><img src="Screenshot%202026-10-19%20010530.png" alt="Safety alerts"/><br/><sub><b>Alerts:</b> severity-graded, acknowledgeable, persisted in Supabase.</sub></td>
+<td width="50%"><img src="Screenshot%202026-10-19%20010544.png" alt="Read-back ledger"/><br/><sub><b>Ledger:</b> searchable audit trail with side-by-side instruction vs. read-back and CSV export.</sub></td>
 </tr>
 </table>
 
 ### Terminal Radar Scope
 
-<img src="docs/screenshots/06-radar.png" alt="Terminal radar scope with live ADS-B and aircraft inspector" width="100%"/>
+<img src="Screenshot%202026-10-19%20010605.png" alt="Terminal radar scope with live ADS-B and aircraft inspector" width="100%"/>
 
 <sub>10 NM CRT-style scope over KSFO with live ADS-B targets from <a href="https://adsb.fi">adsb.fi</a>, label decluttering, and an Aircraft Target Inspector with registry-matched photos from Planespotters.</sub>
 
@@ -129,20 +142,20 @@ Verdict chips: 🟢 **MATCH** · 🔴 **MISMATCH** · 🟠 **PARTIAL** · ⚪ **
 
 <table>
 <tr>
-<td width="50%"><img src="docs/screenshots/07-analytics.png" alt="Analytics"/><br/><sub><b>Analytics:</b> error-rate trend and outcome distribution computed from Supabase.</sub></td>
-<td width="50%"><img src="docs/screenshots/08-training.png" alt="Training simulator"/><br/><sub><b>Pilot Mode:</b> hear a clearance, type your read-back, get graded instantly.</sub></td>
+<td width="50%"><img src="Screenshot%202026-10-19%20010618.png" alt="Analytics"/><br/><sub><b>Analytics:</b> error-rate trend and outcome distribution computed from Supabase.</sub></td>
+<td width="50%"><img src="Screenshot%202026-10-19%20010628.png" alt="Training simulator"/><br/><sub><b>Pilot Mode:</b> hear a clearance, type your read-back, get graded instantly.</sub></td>
 </tr>
 </table>
 
-<img src="docs/assets/divider.svg" width="100%" alt=""/>
+<img src="divider%20(1).svg" width="100%" alt=""/>
 
 ## 📊 Analytics at a Glance
 
 <div align="center">
-<img src="docs/assets/analytics.svg" alt="Animated analytics chart" width="100%"/>
+<img src="analytics.svg" alt="Animated analytics chart" width="100%"/>
 </div>
 
-<img src="docs/assets/divider.svg" width="100%" alt=""/>
+<img src="divider%20(1).svg" width="100%" alt=""/>
 
 ## ✨ Features
 
@@ -157,7 +170,7 @@ Verdict chips: 🟢 **MATCH** · 🔴 **MISMATCH** · 🟠 **PARTIAL** · ⚪ **
 | `/training` | **Phraseology simulator** | 10+ FAA/ICAO clearances, instant deterministic grading, streak tracking |
 | `/settings` | **Settings** | Light/dark theme, alert sounds, AI parser status, voice cadence, **Reset Demo Data** (user-scoped) |
 
-<img src="docs/assets/divider.svg" width="100%" alt=""/>
+<img src="divider%20(1).svg" width="100%" alt=""/>
 
 ## 🧭 What Is Real vs. Simulated
 
@@ -171,37 +184,39 @@ Verdict chips: 🟢 **MATCH** · 🔴 **MISMATCH** · 🟠 **PARTIAL** · ⚪ **
 | Dashboard scenarios | 🔵 **Simulated** | Pre-scripted exchanges for demos and training |
 | Radio voices | 🔵 **Synthesized** | Web Speech API with simulated squelch |
 
-<img src="docs/assets/divider.svg" width="100%" alt=""/>
+<img src="divider%20(1).svg" width="100%" alt=""/>
 
 ## 🏗️ Architecture
 
 ```mermaid
-flowchart LR
-    subgraph Browser["🖥️ React 19 + TypeScript + Vite"]
-        UI[Dashboard · Radar · Ledger · Alerts · Analytics · Training]
-        RULES[[⚖️ Deterministic Verification Engine]]
-        AUDIO[🔊 Web Audio + Speech Synthesis]
-        RTC[🎙️ Agora RTC SDK]
+flowchart TB
+    subgraph Browser["Browser - React 19 + TypeScript + Vite"]
+        UI["Dashboard, Radar, Ledger, Alerts, Analytics, Training"]
+        RULES["Deterministic Verification Engine"]
+        AUDIO["Web Audio + Speech Synthesis"]
+        RTC["Agora RTC SDK"]
     end
 
-    subgraph Supabase["☁️ Supabase"]
-        AUTH[🔐 Auth · Google / GitHub OAuth]
-        PG[(🗄️ PostgreSQL + RLS)]
-        RT[⚡ Realtime]
-        EDGE[λ Edge Functions · Deno]
+    subgraph Supabase["Supabase"]
+        AUTH["Auth - Google and GitHub OAuth"]
+        PG[("PostgreSQL + RLS")]
+        RT["Realtime"]
+        EDGE["Edge Functions - Deno"]
     end
 
-    LLM["🧠 Gemini / Groq<br/>(server-side keys)"]
-    ADSB["📡 adsb.fi"]
-    PHOTO["📷 Planespotters"]
+    LLM["Gemini / Groq - server-side keys"]
+    ADSB["adsb.fi"]
+    PHOTO["Planespotters"]
 
-    UI <--> AUTH
-    UI <--> PG
-    PG --> RT --> UI
-    UI --> EDGE --> LLM
-    EDGE -. fallback .-> RULES
+    UI --> AUTH
+    UI --> PG
+    PG --> RT
+    RT --> UI
+    UI --> EDGE
+    EDGE --> LLM
+    EDGE -.->|fallback| RULES
     UI --> RULES
-    UI <--> RTC
+    UI --> RTC
     UI --> AUDIO
     UI --> ADSB
     UI --> PHOTO
@@ -224,7 +239,7 @@ Access is controlled by Row Level Security and hardened RPCs; secrets never reac
 
 </details>
 
-<img src="docs/assets/divider.svg" width="100%" alt=""/>
+<img src="divider%20(1).svg" width="100%" alt=""/>
 
 ## 🧰 Tech Stack
 
@@ -242,6 +257,7 @@ Access is controlled by Row Level Security and hardened RPCs; secrets never reac
 ![Agora](https://img.shields.io/badge/Agora_RTC-099dfd?style=flat-square)
 ![Recharts](https://img.shields.io/badge/Recharts-22b5bf?style=flat-square)
 ![Vitest](https://img.shields.io/badge/Vitest-6e9f18?style=flat-square&logo=vitest&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000?style=flat-square&logo=vercel&logoColor=white)
 
 </div>
 
@@ -251,16 +267,19 @@ Access is controlled by Row Level Security and hardened RPCs; secrets never reac
 - **AI:** Gemini and Groq (Llama 3.3 70B) extraction behind Edge Functions, with a sub-5 ms local regex fallback
 - **Voice:** Agora RTC (WebRTC), Web Speech API, procedural Web Audio earcons
 - **Data:** adsb.fi (surveillance), Planespotters.net (aircraft photos)
+- **Hosting:** Vercel
 
-<img src="docs/assets/divider.svg" width="100%" alt=""/>
+<img src="divider%20(1).svg" width="100%" alt=""/>
 
 ## 🚀 Quick Start
+
+> Just want to look around? Skip setup and open **[safecomm.vercel.app](https://safecomm.vercel.app)**.
 
 **Prerequisites:** Node.js 18+ (20+ recommended), npm 9+, optionally the Supabase CLI.
 
 ```bash
 # 1. Clone and install
-git clone https://github.com/your-username/SafeComm.git
+git clone https://github.com/chethankp365/SafeComm.git
 cd SafeComm
 npm install
 
@@ -313,7 +332,7 @@ supabase functions deploy
 
 </details>
 
-<img src="docs/assets/divider.svg" width="100%" alt=""/>
+<img src="divider%20(1).svg" width="100%" alt=""/>
 
 ## 🧪 Testing
 
@@ -325,7 +344,7 @@ npm run build   # TypeScript compile + production bundle
 
 The latest reported run: **227 tests across 12 files**, clean production build. Passing tests demonstrate software behaviour, not aviation safety.
 
-<img src="docs/assets/divider.svg" width="100%" alt=""/>
+<img src="divider%20(1).svg" width="100%" alt=""/>
 
 ## 🗺️ Roadmap
 
@@ -333,13 +352,14 @@ The latest reported run: **227 tests across 12 files**, clean production build. 
 - [x] Live ADS-B radar scope with aircraft inspector
 - [x] Alerts, ledger, analytics and training simulator
 - [x] Supabase auth, RLS and realtime
+- [x] Public deployment on Vercel: [safecomm.vercel.app](https://safecomm.vercel.app)
 - [ ] Security audit of RPCs, RLS and Reset Demo Data
 - [ ] Verified multi-browser, multi-user voice testing
 - [ ] Source labels and data-freshness indicators for every aircraft position
 - [ ] Expanded edge-case, authorization and multi-user test coverage
 - [ ] Accessibility and responsive-layout review
 - [ ] Bundle-size optimisation and lint-warning cleanup
-- [ ] Public deployment (Vercel or similar) and end-to-end smoke test
+- [ ] End-to-end smoke test of the deployed site
 
 ## ⚠️ Limitations
 
@@ -349,13 +369,16 @@ The latest reported run: **227 tests across 12 files**, clean production build. 
 - Analytics reflect stored demo data and are **not** validated real-world safety metrics.
 - Destructive operations and multi-user access rely on server-side authorization that should be audited before any sensitive use.
 
-<img src="docs/assets/divider.svg" width="100%" alt=""/>
-
+<!--
 ## 🎨 Brand
+Uncomment once docs/assets/logo-kit.png is added to the repo.
 
 <div align="center">
 <img src="docs/assets/logo-kit.png" alt="SafeComm logo kit: primary, horizontal, stacked and app icon" width="100%"/>
 </div>
+-->
+
+<img src="divider%20(1).svg" width="100%" alt=""/>
 
 ## 🙏 Acknowledgements and License
 
@@ -370,6 +393,8 @@ SafeComm is developed for research, education and aviation safety demonstration.
 <br/>
 
 **Every read-back. Verified.**
+
+🌐 [**safecomm.vercel.app**](https://safecomm.vercel.app)
 
 <sub>Built with ✈️ for safer skies.</sub>
 
