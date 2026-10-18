@@ -14,7 +14,7 @@
 **An AI-assisted safety net for the most important sentence in aviation: the read-back.**
 SafeComm listens to controller ↔ pilot radio exchanges, extracts every instruction, and lets a **deterministic rule engine** decide whether the read-back matches.
 
-[**🌐 Live site**](https://safecomm.vercel.app) · [**Demo**](#-demo) · [**Pipeline**](#-how-it-works) · [**Screenshots**](#-screenshots) · [**Quick start**](#-quick-start) · [**Roadmap**](#-roadmap)
+[**🌐 Live site**](https://safecomm.vercel.app) · [**Demo**](#-demo) · [**Pipeline**](#-how-it-works) · [**Prototype**](#-screenshots) · [**Quick start**](#-quick-start) · [**Roadmap**](#-roadmap)
 
 </div>
 
@@ -106,7 +106,7 @@ Verdict chips: 🟢 **MATCH** · 🔴 **MISMATCH** · 🟠 **PARTIAL** · ⚪ **
 
 <img src="divider%20(1).svg" width="100%" alt=""/>
 
-## 📸 Screenshots
+## 📸 Prototype
 
 ### Landing
 
