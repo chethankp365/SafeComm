@@ -1,193 +1,376 @@
-# SafeComm — AI-Powered Aeronautical Radio Read-Back Safety Platform
+<div align="center">
 
-> **SafeComm is an intelligent aeronautical safety platform that continuously monitors air traffic radio exchanges, automatically detecting clearance deviations and read-back errors before they become runway incursions or airspace conflicts.**
->
-> Built for air traffic controllers, flight crews, and aviation safety officers, SafeComm combines real-time speech processing, AI instruction extraction, and deterministic phraseology rulebook verification with real live ADS-B surveillance.
+<img src="docs/assets/banner.svg" alt="SafeComm — Every read-back. Verified." width="100%"/>
 
----
+<br/>
 
-## Prototype Notice
+[![Prototype](https://img.shields.io/badge/status-prototype-f59e0b?style=for-the-badge)](#-prototype-notice)
+[![React](https://img.shields.io/badge/React-19-0a0a0a?style=for-the-badge&logo=react&logoColor=61dafb)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-0a0a0a?style=for-the-badge&logo=typescript&logoColor=3178c6)](https://www.typescriptlang.org)
+[![Supabase](https://img.shields.io/badge/Supabase-Postgres%20%2B%20Realtime-0a0a0a?style=for-the-badge&logo=supabase&logoColor=3ecf8e)](https://supabase.com)
+[![Tests](https://img.shields.io/badge/tests-227%20passing-16a34a?style=for-the-badge&logo=vitest&logoColor=white)](#-testing)
 
-> **PROTOTYPE — NOT FOR OPERATIONAL USE**
-> SafeComm is an aeronautical safety demonstration and training prototype designed for evaluation, safety research, and phraseology training. It is not certified for operational air traffic control separation or flight operations.
+**An AI-assisted safety net for the most important sentence in aviation: the read-back.**
+SafeComm listens to controller ↔ pilot radio exchanges, extracts every instruction, and lets a **deterministic rule engine** decide whether the read-back matches.
 
----
+[**Live demo**](#-live-demo) · [**Pipeline**](#-how-it-works) · [**Screenshots**](#-screenshots) · [**Quick start**](#-quick-start) · [**Roadmap**](#-roadmap)
 
-## Screenshots
+</div>
 
-The following interface screenshots represent the implemented application:
+<img src="docs/assets/divider.svg" width="100%" alt=""/>
 
-| Live Radar Scope & Target Inspector | Real-Time Safety Audit Ledger |
-| :---: | :---: |
-| ![Radar Scope](docs/screenshots/radar.png) | ![Audit Ledger](docs/screenshots/ledger.png) |
-| *10 NM terminal scope with real ADS-B traffic & Planespotters photo enrichment* | *Electronic flight strips with side-by-side readback evaluation and CSV export* |
+## 🚨 Prototype Notice
 
-| Safety Alerts & Severity Dispatch | Historical Safety Analytics & Trends |
-| :---: | :---: |
-| ![Safety Alerts](docs/screenshots/alerts.png) | ![Safety Analytics](docs/screenshots/analytics.png) |
-| *Severity-graded alerts with Web Audio Master Caution earcons* | *Real-time error rate tracking and outcome distribution donuts* |
+> **SafeComm is a demonstration, research and phraseology-training prototype. It is NOT certified for operational air traffic control, separation assurance or flight operations, and must never be used to make real-world safety decisions.**
 
----
+<img src="docs/assets/divider.svg" width="100%" alt=""/>
 
-## Technology Stack
+## 🎯 Why SafeComm?
 
-- **Frontend Core**: React 19, TypeScript, Vite, React Router 7.
-- **Styling & Design System**: Bespoke Aerospace Design System with pure black-and-white Day Light Mode, low-glare Night Dark Mode, and CSS custom property design tokens.
-- **Backend & Cloud**: Supabase (PostgreSQL with Row Level Security, Supabase Auth, Supabase Realtime WebSocket subscriptions, Deno Edge Functions).
-- **Surveillance & Telemetry**:
-  - Open ADS-B surveillance integration via [adsb.fi](https://adsb.fi/).
-  - Authentic aircraft photograph enrichment via [Planespotters.net API](https://www.planespotters.net/).
-- **Voice & Acoustic Synthesis**:
-  - Web Audio API procedural synthesis for aviation Master Caution two-tone earcons.
-  - Web Speech API (`SpeechSynthesis`) for authentic ATC controller, pilot read-back, and advisory audio.
-  - Agora RTC SDK for low-latency bidirectional WebRTC voice communication rooms.
-- **AI & Natural Language Processing**:
-  - Dual-parser architecture: Cloud LLM extraction (Groq Llama 3.3 70B & Google Gemini 2.5 Flash) via isolated Supabase Edge Functions.
-  - Sub-5ms deterministic regex/phraseology local fallback extractor.
-  - Deterministic Aeronautical Verification Engine based on **FAA Order 7110.65** and **ICAO Annex 10**.
-- **Data Visualization**: Recharts (responsive line charts, distribution donuts, custom aerospace tooltips) and HTML5 Canvas (high-contrast CRT phosphor radar scope).
-- **Quality Assurance**: Vitest (227 automated tests), Oxlint, TypeScript strict mode.
+A clearance is only safe once it has been **heard, repeated and confirmed correctly**. Wrong turn direction, a swapped runway, a missing squawk: small slips in a read-back are how level busts and runway incursions begin, and reviewing recordings by hand is slow.
 
----
+SafeComm explores a hybrid approach:
 
-## Core Features
+| | Role | Why |
+| :-- | :-- | :-- |
+| 🧠 **AI** | *Extracts* structured instructions from transcripts | Natural language is messy; LLMs are good at parsing it |
+| ⚖️ **Rules** | *Decide* whether the read-back matches | Safety verdicts must be repeatable, explainable and auditable |
+| 📡 **Live data** | *Contextualises* with real ADS-B traffic | Real traffic makes training and review more realistic |
 
-1. **Terminal Radar Scope (`/map`)**
-   - High-contrast CRT phosphor radar scope defaulting to **10 NM** terminal airspace (with 10, 25, 40, and 60 NM range rings).
-   - Real-time ADS-B aircraft telemetry from `adsb.fi`, plotting genuine traffic, heading vectors, and SFO runway alignments.
-   - Dynamic label decluttering and 4-quadrant collision avoidance capping visible labels at 6–8 prioritized targets.
-   - Comprehensive **Aircraft Target Inspector** displaying:
-     - Header with callsign, flight status (`LIVE ADS-B` or `ON GROUND`), and aircraft type/operator.
-     - Authentic registry-matched photographs with photographer attribution, or a blueprint silhouette fallback for unregistered craft.
-     - 4-metric Flight Telemetry KPI strip (Baro Altitude, Ground Speed, Track/Heading, and Vertical Rate with climbing/descending indicators).
-     - Aircraft technical specifications (ICAO 24-bit Hex, Registration, Wake Category, Squawk).
-     - Geographic coordinates, range, bearing, position age, and `adsb.fi` Globe tracking link.
+> **Key principle: AI assists with extraction. Deterministic TypeScript rules make the verdict.**
 
-2. **Real-Time Radio Ingestion & Live Dashboard (`/dashboard`)**
-   - Live stream of controller transmissions and flight crew read-backs.
-   - Instant deterministic verdict chips: **MATCH** (green), **MISMATCH** (red), **PARTIAL** (amber), **UNVERIFIED** (gray).
-   - Interactive training corrections and guidance whenever phraseology discrepancies occur.
-   - Dedicated Communication Room launcher for real-time two-participant voice sessions.
+<img src="docs/assets/divider.svg" width="100%" alt=""/>
 
-3. **Live Communication Rooms (`/comm/:roomId`)**
-   - Synchronized two-user communication rooms (ATC Controller and Pilot stations).
-   - Low-latency voice transport powered by Agora RTC.
-   - Push-To-Talk (PTT) and active microphone state controls.
-   - Real-time transcription, parameter extraction, and inline safety verdict streaming.
-   - Session completion summary with 5-star rating feedback.
+## 🎬 Live Demo
 
-4. **Electronic Verification Ledger (`/ledger`)**
-   - Searchable, filterable audit trail formatted like electronic flight progress strips.
-   - Side-by-side instruction vs. heard read-back text with highlighted parameter discrepancies.
-   - Client-side CSV export for safety compliance auditing.
+<div align="center">
+<img src="docs/assets/demo.svg" alt="Animated demo: a wrong turn direction in a read-back is caught by the rule engine" width="100%"/>
+</div>
 
-5. **Safety Alert Center (`/alerts`)**
-   - Severity-graded deviation tracking: **CRITICAL** (runway hold-short or altitude busts), **WARNING** (speed/heading deviations), and **OK**.
-   - Procedural Web Audio API **Master Caution two-tone earcon** sounded on high-alert arrival.
-   - Officer acknowledgement workflow with persistent tracking in Supabase.
+The loop above replays the built-in **Heading Direction Swap** scenario: the controller assigns a **right** turn, the pilot reads back **left**, and the engine raises a **critical** alert with a Master Caution earcon.
 
-6. **Safety Analytics & Trend Intelligence (`/analytics`)**
-   - Real-time aggregation of overall read-back compliance and deviation error rates.
-   - Chronological error rate trend line chart across sessions.
-   - Outcome distribution donut chart categorized by FAA Order 7110.65 compliance.
+<img src="docs/assets/divider.svg" width="100%" alt=""/>
 
-7. **Phraseology Training Simulator (`/training`)**
-   - Interactive air traffic clearance exercises covering standard FAA/ICAO phraseology.
-   - Real-time deterministic grading of user read-backs with precision accuracy and streak tracking.
+## ⚙️ How It Works
 
-8. **System Configuration & Settings (`/settings`)**
-   - Persistent Day Light Mode and Night Dark Mode toggle.
-   - Web Audio alert earcon toggle with live chime test.
-   - Read-only AI parser status display showing active parser and server-isolated credential architecture.
-   - Speech synthesis volume, cadence, and role voice customizers.
-   - Officer account management, database connectivity check, and sign-out.
-   - **Reset Demo Data**: User-scoped confirmation utility to safely reset demo transmissions and test rooms without touching other users' data.
+<div align="center">
+<img src="docs/assets/pipeline.svg" alt="SafeComm pipeline from radio audio to verdict" width="100%"/>
+</div>
 
----
+```mermaid
+sequenceDiagram
+    autonumber
+    participant C as 🎙️ Controller
+    participant P as 🧑‍✈️ Pilot
+    participant X as 🧠 Extractor (LLM / regex)
+    participant E as ⚖️ Rule Engine
+    participant DB as 🗄️ Supabase
+    participant UI as 🖥️ Dashboard
 
-## What is Real vs. Simulated
+    C->>P: "United 421, turn RIGHT heading 090…"
+    P-->>C: "Turn LEFT heading 090…"
+    C->>X: transcript
+    P->>X: transcript
+    X->>E: structured instruction + read-back
+    E->>E: compare heading · altitude · runway · squawk · speed
+    E->>DB: verdict + alert + ledger row
+    DB-->>UI: realtime push
+    UI-->>C: 🔴 MISMATCH · Master Caution
+```
 
-To ensure transparency regarding system capabilities:
+### What the engine checks
 
-| Feature Component | Implementation Nature | Details |
-| :--- | :---: | :--- |
-| **Surveillance Radar** | **REAL** | Real-time broadcast positions fetched directly from `adsb.fi`. Genuine aircraft photographs fetched from `Planespotters.net`. Completely independent from training scenario data. |
-| **Read-Back Verification** | **REAL** | Deterministic rule engine verifying altitude, heading, runway hold-short, squawk, and speed against FAA Order 7110.65 / ICAO Annex 10 standards. |
-| **Cloud Persistence & Auth** | **REAL** | Authenticated officer sessions, session persistence, RLS policies, alerts, and audit ledgers stored in PostgreSQL via Supabase. |
-| **Two-User Voice Comms** | **REAL** | Real-time audio transport between dual participants using WebRTC / Agora RTC. |
-| **Instruction Extraction** | **HYBRID** | Server-side LLM extraction (Groq Llama 3.3 / Gemini) via Supabase Edge Function with automatic fallback to sub-5ms local deterministic regex extraction. |
-| **Dashboard Scenarios** | **SIMULATED** | Pre-scripted air traffic control scenario sequences (Runway Incursion, Level Bust, Heading Deviation) used for standardized demonstration and training. |
-| **Speech Synthesizer** | **SYNTHESIZED** | Text-to-speech radio voices generated via Web Speech API (`SpeechSynthesis`) with simulated squelch audio tones. |
+| Parameter | Checks | Example failure | Severity |
+| :-- | :-- | :-- | :--: |
+| **Heading + turn direction** | value and RIGHT/LEFT | RIGHT 090 → read back LEFT 090 | 🔴 Critical |
+| **Altitude / flight level** | assigned vs. read-back | 2,000 ft → 3,000 ft | 🔴 Critical |
+| **Runway + hold-short** | designator and L/R/C | 28L → 28R | 🔴 Critical |
+| **Squawk** | 4-digit code | 4215 omitted | 🟠 Warning |
+| **Speed** | assigned speed | 210 → 220 kts | 🟠 Warning |
+| **Callsign** | consistency | wrong or missing callsign | 🟠 Warning |
 
----
+Verdict chips: 🟢 **MATCH** · 🔴 **MISMATCH** · 🟠 **PARTIAL** · ⚪ **UNVERIFIED**
 
-## Local Setup & Development
+<img src="docs/assets/divider.svg" width="100%" alt=""/>
 
-### 1. Prerequisites
-- **Node.js**: v18.0.0 or higher (v20+ recommended)
-- **npm**: v9.0.0 or higher
-- Optional: Supabase CLI (if modifying Edge Functions or running migrations locally)
+## 📸 Screenshots
 
-### 2. Installation
-Clone the repository and install dependencies:
+### Landing
+
+<table>
+<tr>
+<td width="50%"><img src="docs/screenshots/01-landing-hero.png" alt="Landing hero"/></td>
+<td width="50%"><img src="docs/screenshots/02-landing-simulation.png" alt="Landing: simulation"/></td>
+</tr>
+</table>
+
+### Operations Dashboard
+
+<img src="docs/screenshots/03-dashboard.png" alt="Dashboard with live transcript, alerts and compliance" width="100%"/>
+
+<sub>Scenario player, live radio transcript and ASR feed, read-back compliance, active safety alerts and the deterministic phraseology comparison panel.</sub>
+
+### Safety Alerts and Audit Ledger
+
+<table>
+<tr>
+<td width="50%"><img src="docs/screenshots/04-alerts.png" alt="Safety alerts"/><br/><sub><b>Alerts:</b> severity-graded, acknowledgeable, persisted in Supabase.</sub></td>
+<td width="50%"><img src="docs/screenshots/05-ledger.png" alt="Read-back ledger"/><br/><sub><b>Ledger:</b> searchable audit trail with side-by-side instruction vs. read-back and CSV export.</sub></td>
+</tr>
+</table>
+
+### Terminal Radar Scope
+
+<img src="docs/screenshots/06-radar.png" alt="Terminal radar scope with live ADS-B and aircraft inspector" width="100%"/>
+
+<sub>10 NM CRT-style scope over KSFO with live ADS-B targets from <a href="https://adsb.fi">adsb.fi</a>, label decluttering, and an Aircraft Target Inspector with registry-matched photos from Planespotters.</sub>
+
+### Analytics and Training
+
+<table>
+<tr>
+<td width="50%"><img src="docs/screenshots/07-analytics.png" alt="Analytics"/><br/><sub><b>Analytics:</b> error-rate trend and outcome distribution computed from Supabase.</sub></td>
+<td width="50%"><img src="docs/screenshots/08-training.png" alt="Training simulator"/><br/><sub><b>Pilot Mode:</b> hear a clearance, type your read-back, get graded instantly.</sub></td>
+</tr>
+</table>
+
+<img src="docs/assets/divider.svg" width="100%" alt=""/>
+
+## 📊 Analytics at a Glance
+
+<div align="center">
+<img src="docs/assets/analytics.svg" alt="Animated analytics chart" width="100%"/>
+</div>
+
+<img src="docs/assets/divider.svg" width="100%" alt=""/>
+
+## ✨ Features
+
+| Route | Feature | Highlights |
+| :-- | :-- | :-- |
+| `/dashboard` | **Live radio dashboard** | Scripted scenarios, live transcript feed, instant verdict chips, training corrections |
+| `/map` | **Terminal radar scope** | 10/25/40/60 NM ranges, live ADS-B, runway alignments, decluttered labels, target inspector (altitude, speed, track, vertical rate, hex, registration, squawk) |
+| `/comm/:roomId` | **Voice communication rooms** | Two-station ATC ↔ Pilot rooms over Agora RTC, push-to-talk, live transcription and inline verdicts, session rating |
+| `/ledger` | **Verification ledger** | Flight-strip style audit trail, filters, highlighted discrepancies, CSV export |
+| `/alerts` | **Safety alert center** | Critical / warning / low grading, Web Audio Master Caution earcon, acknowledgement workflow |
+| `/analytics` | **Trend intelligence** | Compliance rate, error-rate trend, outcome donut |
+| `/training` | **Phraseology simulator** | 10+ FAA/ICAO clearances, instant deterministic grading, streak tracking |
+| `/settings` | **Settings** | Light/dark theme, alert sounds, AI parser status, voice cadence, **Reset Demo Data** (user-scoped) |
+
+<img src="docs/assets/divider.svg" width="100%" alt=""/>
+
+## 🧭 What Is Real vs. Simulated
+
+| Component | Nature | Notes |
+| :-- | :--: | :-- |
+| Surveillance radar | 🟢 **Real** | Live positions from `adsb.fi`; photos from Planespotters.net |
+| Read-back verification | 🟢 **Real** | Deterministic rule engine (FAA Order 7110.65 / ICAO Annex 10 phraseology) |
+| Auth and persistence | 🟢 **Real** | Supabase Auth, PostgreSQL with RLS, realtime subscriptions |
+| Two-user voice | 🟢 **Real** | WebRTC audio via Agora RTC |
+| Instruction extraction | 🟡 **Hybrid** | Cloud LLM via Edge Function with local regex fallback |
+| Dashboard scenarios | 🔵 **Simulated** | Pre-scripted exchanges for demos and training |
+| Radio voices | 🔵 **Synthesized** | Web Speech API with simulated squelch |
+
+<img src="docs/assets/divider.svg" width="100%" alt=""/>
+
+## 🏗️ Architecture
+
+```mermaid
+flowchart LR
+    subgraph Browser["🖥️ React 19 + TypeScript + Vite"]
+        UI[Dashboard · Radar · Ledger · Alerts · Analytics · Training]
+        RULES[[⚖️ Deterministic Verification Engine]]
+        AUDIO[🔊 Web Audio + Speech Synthesis]
+        RTC[🎙️ Agora RTC SDK]
+    end
+
+    subgraph Supabase["☁️ Supabase"]
+        AUTH[🔐 Auth · Google / GitHub OAuth]
+        PG[(🗄️ PostgreSQL + RLS)]
+        RT[⚡ Realtime]
+        EDGE[λ Edge Functions · Deno]
+    end
+
+    LLM["🧠 Gemini / Groq<br/>(server-side keys)"]
+    ADSB["📡 adsb.fi"]
+    PHOTO["📷 Planespotters"]
+
+    UI <--> AUTH
+    UI <--> PG
+    PG --> RT --> UI
+    UI --> EDGE --> LLM
+    EDGE -. fallback .-> RULES
+    UI --> RULES
+    UI <--> RTC
+    UI --> AUDIO
+    UI --> ADSB
+    UI --> PHOTO
+```
+
+<details>
+<summary><b>🗄️ Database model</b></summary>
+
+```mermaid
+erDiagram
+    SESSIONS ||--o{ TRANSMISSIONS : contains
+    TRANSMISSIONS ||--o{ INSTRUCTIONS : yields
+    TRANSMISSIONS ||--o{ VERDICTS : evaluated_by
+    VERDICTS ||--o{ ALERTS : raises
+    COMM_ROOMS ||--o{ COMM_PARTICIPANTS : has
+    COMM_ROOMS ||--o{ SESSIONS : runs
+```
+
+Access is controlled by Row Level Security and hardened RPCs; secrets never reach the browser.
+
+</details>
+
+<img src="docs/assets/divider.svg" width="100%" alt=""/>
+
+## 🧰 Tech Stack
+
+<div align="center">
+
+![React](https://img.shields.io/badge/React_19-20232a?style=flat-square&logo=react&logoColor=61dafb)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178c6?style=flat-square&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646cff?style=flat-square&logo=vite&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router_7-ca4245?style=flat-square&logo=reactrouter&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ecf8e?style=flat-square&logo=supabase&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=flat-square&logo=postgresql&logoColor=white)
+![Deno](https://img.shields.io/badge/Deno_Edge_Functions-000?style=flat-square&logo=deno&logoColor=white)
+![Gemini](https://img.shields.io/badge/Gemini-8e75b2?style=flat-square&logo=googlegemini&logoColor=white)
+![Groq](https://img.shields.io/badge/Groq-f55036?style=flat-square)
+![Agora](https://img.shields.io/badge/Agora_RTC-099dfd?style=flat-square)
+![Recharts](https://img.shields.io/badge/Recharts-22b5bf?style=flat-square)
+![Vitest](https://img.shields.io/badge/Vitest-6e9f18?style=flat-square&logo=vitest&logoColor=white)
+
+</div>
+
+- **Frontend:** React 19, TypeScript (strict), Vite, React Router 7, Lucide icons, Recharts, HTML5 Canvas radar
+- **Design system:** bespoke aerospace tokens with a pure black-and-white day mode and a low-glare night mode
+- **Backend:** Supabase Auth, PostgreSQL with RLS, Realtime, Deno Edge Functions
+- **AI:** Gemini and Groq (Llama 3.3 70B) extraction behind Edge Functions, with a sub-5 ms local regex fallback
+- **Voice:** Agora RTC (WebRTC), Web Speech API, procedural Web Audio earcons
+- **Data:** adsb.fi (surveillance), Planespotters.net (aircraft photos)
+
+<img src="docs/assets/divider.svg" width="100%" alt=""/>
+
+## 🚀 Quick Start
+
+**Prerequisites:** Node.js 18+ (20+ recommended), npm 9+, optionally the Supabase CLI.
+
 ```bash
+# 1. Clone and install
 git clone https://github.com/your-username/SafeComm.git
 cd SafeComm
 npm install
-```
 
-### 3. Environment Configuration
-Create a `.env` file in the root directory based on `.env.example`:
-```bash
+# 2. Configure the client
 cp .env.example .env
 ```
 
-Configure your environment variables:
 ```ini
-# Client-side Supabase credentials (Project Settings > API in Supabase Dashboard)
+# .env: client-side values only (Supabase Dashboard → Project Settings → API)
 VITE_SUPABASE_URL=https://your-project-id.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-public-key
 ```
 
-### 4. Supabase Database Migrations
-If you are connecting to your own Supabase project, execute the SQL migration scripts in numerical order inside your **Supabase Dashboard > SQL Editor**:
-1. `supabase/migrations/001_initial_schema.sql` — Base sessions, transmissions, instructions, verdicts, and alerts.
-2. `supabase/migrations/002_fix_rls_and_permissions.sql` — Row Level Security policies.
-3. `supabase/migrations/003_comm_rooms.sql` — Two-user communication room schema.
-4. `supabase/migrations/004_secure_comm_rooms.sql` — Hardened RPCs for room lifecycle.
-5. `supabase/migrations/005_comm_session_feedback.sql` — Session feedback & ratings.
-6. `supabase/migrations/006_fix_comm_rls_recursion.sql` — Non-recursive participant checks.
-7. `supabase/migrations/007_secure_multiuser_comm_verdicts.sql` — Multi-station verdict sync.
-8. `supabase/migrations/008_comm_ledger_and_radar_rpcs.sql` — Ledger & scope RPCs.
-9. `supabase/migrations/009_alerts_rpc_and_acknowledgement.sql` — Alert management RPCs.
-10. `supabase/migrations/010_analytics_rpc.sql` — Analytics aggregation function.
-11. `supabase/migrations/011_reset_demo_data.sql` — Safe demo environment reset RPC.
-
-### 5. Start Development Server
 ```bash
-npm run dev
-```
-Open [http://localhost:5173](http://localhost:5173) in your browser.
-
----
-
-## Automated Verification & Testing
-
-SafeComm includes a comprehensive automated test suite covering read-back verification, audio handling, live ADS-B surveillance, Planespotters photo enrichment, and communication room authorization:
-
-```bash
-# Run the complete Vitest test suite
-npm run test
-
-# Run code quality lint checks (Oxlint)
-npm run lint
-
-# Compile TypeScript and generate production bundle
-npm run build
+# 3. Run
+npm run dev        # → http://localhost:5173
 ```
 
----
+<details>
+<summary><b>🗄️ Database migrations (run in order in the Supabase SQL Editor)</b></summary>
 
-## License
+| # | File | Purpose |
+| :-: | :-- | :-- |
+| 1 | `001_initial_schema.sql` | Sessions, transmissions, instructions, verdicts, alerts |
+| 2 | `002_fix_rls_and_permissions.sql` | Row Level Security policies |
+| 3 | `003_comm_rooms.sql` | Two-user communication rooms |
+| 4 | `004_secure_comm_rooms.sql` | Hardened room lifecycle RPCs |
+| 5 | `005_comm_session_feedback.sql` | Session feedback and ratings |
+| 6 | `006_fix_comm_rls_recursion.sql` | Non-recursive participant checks |
+| 7 | `007_secure_multiuser_comm_verdicts.sql` | Multi-station verdict sync |
+| 8 | `008_comm_ledger_and_radar_rpcs.sql` | Ledger and scope RPCs |
+| 9 | `009_alerts_rpc_and_acknowledgement.sql` | Alert management RPCs |
+| 10 | `010_analytics_rpc.sql` | Analytics aggregation |
+| 11 | `011_reset_demo_data.sql` | Safe demo reset |
 
-SafeComm is developed for research, education, and aviation safety demonstration. Sourced aeronautical surveillance data is attributed to `adsb.fi`. Sourced aircraft imagery is attributed to `Planespotters.net` contributors under their published terms.
+</details>
+
+<details>
+<summary><b>🔐 Server-side secrets (Edge Functions)</b></summary>
+
+AI provider keys and Agora signing credentials must **never** be placed in `.env` or shipped to the browser. Store them as Supabase secrets and deploy the Edge Functions:
+
+```bash
+supabase secrets set GEMINI_API_KEY=... GROQ_API_KEY=... \
+                     AGORA_APP_ID=... AGORA_APP_CERTIFICATE=...
+supabase functions deploy
+```
+
+> Match the secret names to those read by your functions in `supabase/functions/`.
+
+</details>
+
+<img src="docs/assets/divider.svg" width="100%" alt=""/>
+
+## 🧪 Testing
+
+```bash
+npm run test    # Vitest: verification, audio, ADS-B, photo enrichment, room authorization
+npm run lint    # Oxlint
+npm run build   # TypeScript compile + production bundle
+```
+
+The latest reported run: **227 tests across 12 files**, clean production build. Passing tests demonstrate software behaviour, not aviation safety.
+
+<img src="docs/assets/divider.svg" width="100%" alt=""/>
+
+## 🗺️ Roadmap
+
+- [x] Deterministic verification engine (heading, altitude, runway, squawk, speed, callsign)
+- [x] Live ADS-B radar scope with aircraft inspector
+- [x] Alerts, ledger, analytics and training simulator
+- [x] Supabase auth, RLS and realtime
+- [ ] Security audit of RPCs, RLS and Reset Demo Data
+- [ ] Verified multi-browser, multi-user voice testing
+- [ ] Source labels and data-freshness indicators for every aircraft position
+- [ ] Expanded edge-case, authorization and multi-user test coverage
+- [ ] Accessibility and responsive-layout review
+- [ ] Bundle-size optimisation and lint-warning cleanup
+- [ ] Public deployment (Vercel or similar) and end-to-end smoke test
+
+## ⚠️ Limitations
+
+- Not certified for operational use; scenarios and voices are simulated.
+- LLM extraction can be wrong or incomplete; the rule engine only checks the fields it implements.
+- A radar view does not by itself prove live tracking is operational; check data freshness.
+- Analytics reflect stored demo data and are **not** validated real-world safety metrics.
+- Destructive operations and multi-user access rely on server-side authorization that should be audited before any sensitive use.
+
+<img src="docs/assets/divider.svg" width="100%" alt=""/>
+
+## 🎨 Brand
+
+<div align="center">
+<img src="docs/assets/logo-kit.png" alt="SafeComm logo kit: primary, horizontal, stacked and app icon" width="100%"/>
+</div>
+
+## 🙏 Acknowledgements and License
+
+- Aeronautical surveillance data: [adsb.fi](https://adsb.fi)
+- Aircraft photography: [Planespotters.net](https://www.planespotters.net) and its contributors, under their published terms
+- Phraseology references: FAA Order JO 7110.65 and ICAO Annex 10
+
+SafeComm is developed for research, education and aviation safety demonstration. Add a `LICENSE` file to state your terms.
+
+<div align="center">
+
+<br/>
+
+**Every read-back. Verified.**
+
+<sub>Built with ✈️ for safer skies.</sub>
+
+</div>
