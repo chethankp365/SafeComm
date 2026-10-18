@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { NavLink, Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
+import { NavLink, Link, useNavigate, Outlet } from 'react-router-dom';
 import {
   LayoutDashboard,
   Radio,
@@ -16,7 +16,6 @@ import {
   Clock,
   Moon,
   Sun,
-  Info,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import './AppShell.css';
@@ -26,23 +25,6 @@ import { fetchUnreadAlertsCount } from '../../lib/alertsAnalyticsService';
 export const AppShell: React.FC = () => {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
-
-  // Dynamic Page Title
-  useEffect(() => {
-    const path = location.pathname;
-    let title = 'SafeComm — AI-Powered Radio Read-Back Safety';
-    if (path.startsWith('/dashboard')) title = 'Dashboard · SafeComm';
-    else if (path.startsWith('/alerts')) title = 'Safety Alerts · SafeComm';
-    else if (path.startsWith('/ledger')) title = 'Audit Ledger · SafeComm';
-    else if (path.startsWith('/map')) title = 'Terminal Radar Scope · SafeComm';
-    else if (path.startsWith('/analytics')) title = 'Safety Analytics · SafeComm';
-    else if (path.startsWith('/training')) title = 'Pilot Training Simulator · SafeComm';
-    else if (path.startsWith('/settings')) title = 'System Settings · SafeComm';
-    else if (path.startsWith('/comm')) title = 'Comm Session · SafeComm';
-
-    document.title = title;
-  }, [location.pathname]);
 
   // Rail collapse state
   const [isCollapsed, setIsCollapsed] = useState<boolean>(() => {
@@ -326,10 +308,14 @@ export const AppShell: React.FC = () => {
           <Outlet />
         </main>
 
-        {/* Persistent Prototype Disclaimer Strip */}
-        <footer className="app-prototype-disclaimer-strip" role="contentinfo">
-          <span className="atc-pulse-dot" style={{ width: 6, height: 6, background: '#f59e0b' }} />
-          <span>PROTOTYPE — NOT FOR OPERATIONAL USE · AERONAUTICAL SAFETY SYSTEM DEMONSTRATOR</span>
+        {/* Persistent Prototype Disclaimer Footer */}
+        <footer className="app-prototype-footer" role="contentinfo">
+          <div className="prototype-footer-content">
+            <span className="prototype-footer-badge">PROTOTYPE</span>
+            <span className="prototype-footer-text">
+              <strong>Prototype — not for operational use.</strong> SafeComm is an aeronautical safety demonstrator combining real-time surveillance, speech synthesis, and deterministic read-back verification.
+            </span>
+          </div>
         </footer>
       </div>
     </div>

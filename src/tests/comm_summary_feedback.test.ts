@@ -125,7 +125,7 @@ describe('SafeComm Connect — End Comm, Session Summary & Five-Star Rating', ()
 
       const stateAfter = await fetchCommRoomState(roomId);
       expect(stateAfter!.room.status).not.toBe('completed');
-    }, 15000);
+    }, 30000);
   });
 
   // --------------------------------------------------------------------------

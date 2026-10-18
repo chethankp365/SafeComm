@@ -7,15 +7,6 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Environment files & Secrets
-.env
-.env.local
-.env.*.local
-*.env
-supabase/.temp/
-supabase/test_analytics.sql
-
-# Build & Dependencies
 node_modules
 dist
 dist-ssr
@@ -32,3 +23,13 @@ dist-ssr
 *.sln
 *.sw?
 
+# Environment & local secrets
+.env
+.env.*
+!.env.example
+
+# Deployment & temp
+.vercel
+.temp/
+*.temp
+.agents/
